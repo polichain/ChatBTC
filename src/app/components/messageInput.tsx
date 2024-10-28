@@ -4,12 +4,16 @@ import React, { useState } from 'react';
 import { FiPaperclip } from 'react-icons/fi';
 import { IoSend } from 'react-icons/io5';
 
-const MessageInput: React.FC = () => {
+interface MessageInputProps {
+    onSend: (text: string) => void;
+}
+
+const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
     const [message, setMessage] = useState('');
 
     const handleSendMessage = () => {
         if (message.trim()) {
-            console.log('Sending message:', message);
+            onSend(message); // Use the onSend prop here
             setMessage('');
         }
     };
