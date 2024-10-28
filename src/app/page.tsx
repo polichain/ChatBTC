@@ -32,7 +32,7 @@ export default function Home() {
 
             {/* Main Content */}
             <main className="main-content flex flex-col flex-grow">
-                <h1 className="text-2xl font-semibold mb-4">Welcome to the Chat Application</h1>
+                <h1 className="text-2xl font-semibold mb-4">Welcome to the Chat BTC</h1>
 
                 {/* Scrollable Chat Messages */}
                 <div className="chat-container flex-grow overflow-auto">
