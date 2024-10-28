@@ -15,7 +15,7 @@ const MessageBubble: React.FC<MessageProps> = ({ text, timestamp, isSentByUser }
           maxWidth: '60%',
           padding: '10px',
           paddingBottom: '20px',
-          backgroundColor: isSentByUser ? '#fff' : '#333', // Darker background for received messages
+          backgroundColor: isSentByUser ? '#fff' : '',
           color: isSentByUser ? '#000' : '#fff',
           borderRadius: '8px',
           boxShadow: isSentByUser ? '0 1px 2px rgba(0, 0, 0, 0.2)' : '',

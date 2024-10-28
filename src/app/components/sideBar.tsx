@@ -2,6 +2,8 @@
 
 import React from 'react';
 import ChatItem from './chatItem';
+import Image from 'next/image';
+import favicon from "@/app/favicon.ico";
 
 const Sidebar: React.FC = () => {
     const chats = [
@@ -13,7 +15,18 @@ const Sidebar: React.FC = () => {
     return (
         <div style={styles.sidebarContainer}>
             <div style={styles.sidebarHeader}>
-                <h2>ChatBTC</h2>
+                <h2>
+                    <Image 
+                      src={favicon} 
+                      alt='' 
+                      style={{ 
+                        width: '50px', 
+                        height: '50px', 
+                        borderRadius: '10px'  // Define o raio das bordas arredondadas
+                      }} 
+                    />
+                    &nbsp;&nbsp; ChatBTC 
+                </h2>
                 <p>Your Chats:</p>
             </div>
             <div style={styles.chatList}>
