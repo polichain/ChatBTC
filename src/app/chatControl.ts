@@ -43,7 +43,6 @@ async function addBotMessage(text: string): Promise<void> {
 
         const data = await response.json();
 
-        // Ensure data.response is defined to avoid undefined message text
         const botText = data.response || 'Sorry, no response available.';
 
         const newMessage: Message = { text: botText, timestamp, isSentByUser: false };
