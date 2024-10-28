@@ -3,6 +3,7 @@ import { GoogleGenerativeAI, GenerateContentResult } from "@google/generative-ai
 
 // Initialize Google Generative AI with API Key from environment variables
 const apiKey = process.env.GOOGLE_API_KEY;
+console.log("API KEY:",apiKey);
 
 if (!apiKey) {
   throw new Error('API Key not defined in environment variables');
