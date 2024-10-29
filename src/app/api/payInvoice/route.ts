@@ -13,7 +13,7 @@ const client = new LightsparkClient(
 export async function POST(request: Request) {
   try {
     const { encodedInvoice } = await request.json();
-    console.log(encodedInvoice);
+    console.log(encodedInvoice)
     const nodeId = process.env.LIGHTSPARK_NODE_ID_USERTEST as string;
     
     // Carregar a chave de assinatura do nó (necessário para pagar invoices)
