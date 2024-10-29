@@ -1,3 +1,6 @@
+
+const invoiceToResponseMap: Record<string, string> = {}; 
+
 export const messages = [
     { text: 'Hi! How can I help you today?', timestamp: '', isSentByUser: false }
 ];
@@ -6,6 +9,7 @@ interface Message {
     text: string;
     timestamp: string;
     isSentByUser: boolean;
+    needInvoicePay?: boolean;
 }
 
 function getCurrentTime(): string {
@@ -24,12 +28,12 @@ export function addUserMessage(text: string): void {
     console.log("Added message: ", newMessage);
 }
 
-// chatControl.ts
+// Função para lidar com a resposta da IA e criação de invoice
 export async function addBotMessage(text: string): Promise<void> {
     const timestamp = getCurrentTime();
 
     try {
-        // Faz a chamada para a API de geração de conteúdo da IA (Gemini)
+        // Chamada para a API de geração de conteúdo da IA (Gemini)
         const response = await fetch('/api/geminiPrompt', {
             method: 'POST',
             body: JSON.stringify({ prompt: text }),
@@ -47,9 +51,9 @@ export async function addBotMessage(text: string): Promise<void> {
 
         // Calcula o valor do invoice baseado no número de tokens usados
         const tokenCount = data.tokens.totalTokenCount || 100;
-        const amountInSatoshis = tokenCount; // Exemplo: 1 token = 1 satoshi
+        const amountInSatoshis = tokenCount;
 
-        // Faz a requisição para a API de criação de invoice
+        // Cria o invoice
         const invoiceResponse = await fetch('/api/createInvoice', {
             method: 'POST',
             body: JSON.stringify({ amount: amountInSatoshis, memo: 'Pagamento de chatbot' }),
@@ -65,10 +69,15 @@ export async function addBotMessage(text: string): Promise<void> {
         const invoiceData = await invoiceResponse.json();
         const invoice = invoiceData.invoice;
 
+        // Armazena a resposta relacionada ao invoice
+        invoiceToResponseMap[invoice] = responseText;
+
+        // Envia uma mensagem ao usuário com o invoice gerado
         const newMessage: Message = { 
-            text: `Pay this ${invoice} to acess chat response.`, 
+            text: `Pague este invoice: ${invoice} para desbloquear a resposta`, 
             timestamp, 
-            isSentByUser: false 
+            isSentByUser: false, 
+            needInvoicePay: true  // Marca que precisa de pagamento
         };
 
         messages.push(newMessage);
@@ -81,11 +90,4 @@ export async function addBotMessage(text: string): Promise<void> {
         };
         messages.push(errorMessage);
     }
-}
-
-// Função para copiar o código do invoice
-function copyInvoice(invoice: string) {
-    navigator.clipboard.writeText(invoice)
-        .then(() => alert('Código de pagamento copiado!'))
-        .catch((err) => console.error('Falha ao copiar o código:', err));
 }
