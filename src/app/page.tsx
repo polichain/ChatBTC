@@ -32,6 +32,13 @@ export default function Home() {
                 },
             });
 
+
+            const data = await response.json();
+
+            if (data.payment) {
+                window.alert('Sucess');
+            } else {
+                window.alert('Failed payment');
             if (!response.ok) {
                 throw new Error('Falha ao processar o pagamento.');
             }
