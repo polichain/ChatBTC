@@ -24,7 +24,8 @@ export function addUserMessage(text: string): void {
     console.log("Added message: ", newMessage);
 }
 
-async function addBotMessage(text: string): Promise<void> {
+// chatControl.ts
+export async function addBotMessage(text: string): Promise<void> {
     const timestamp = getCurrentTime();
 
     try {
@@ -64,12 +65,27 @@ async function addBotMessage(text: string): Promise<void> {
         const invoiceData = await invoiceResponse.json();
         const invoice = invoiceData.invoice;
 
-        const newMessage: Message = { text: `Pague este invoice para receber a resposta: ${invoice}`, timestamp, isSentByUser: false };
-        messages.push(newMessage);
+        const newMessage: Message = { 
+            text: `Pay this ${invoice} to acess chat response.`, 
+            timestamp, 
+            isSentByUser: false 
+        };
 
+        messages.push(newMessage);
     } catch (error) {
         console.error('Erro ao adicionar mensagem do bot:', error);
-        const errorMessage: Message = { text: 'Desculpe, houve um erro ao processar sua solicitação.', timestamp, isSentByUser: false };
+        const errorMessage: Message = { 
+            text: 'Desculpe, houve um erro ao processar sua solicitação.', 
+            timestamp, 
+            isSentByUser: false 
+        };
         messages.push(errorMessage);
     }
+}
+
+// Função para copiar o código do invoice
+function copyInvoice(invoice: string) {
+    navigator.clipboard.writeText(invoice)
+        .then(() => alert('Código de pagamento copiado!'))
+        .catch((err) => console.error('Falha ao copiar o código:', err));
 }
