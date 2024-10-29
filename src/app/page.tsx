@@ -32,17 +32,13 @@ export default function Home() {
                 },
             });
 
-            if (!response.ok) {
-                throw new Error('Falha ao processar o pagamento.');
-            }
 
             const data = await response.json();
-            const paymentStatus = data.payment.status;
 
-            if (paymentStatus === 'COMPLETED') {
-                addUserMessage('Pagamento confirmado! Resposta liberada.');
+            if (data.payment) {
+                window.alert('Sucess');
             } else {
-                addUserMessage('Falha no pagamento. Tente novamente.');
+                window.alert('Failed payment');
             }
 
         } catch (error) {

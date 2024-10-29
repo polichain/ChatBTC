@@ -13,6 +13,7 @@ const client = new LightsparkClient(
 export async function POST(request: Request) {
   try {
     const { encodedInvoice } = await request.json();
+    console.log(encodedInvoice);
     const nodeId = process.env.LIGHTSPARK_NODE_ID_USERTEST as string;
     
     // Carregar a chave de assinatura do nó (necessário para pagar invoices)
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
     
     // Pagar o invoice gerado
     const payment = await client.payInvoice(nodeId, encodedInvoice, 1000000);
-
+    console.log(payment);
     if (!payment) {
       throw new Error("Falha ao pagar o invoice.");
     }
