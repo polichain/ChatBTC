@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+# ChatBTC - AI Chat with Bitcoin Payments
+
+[Live Demo](https://chatbtc.vercel.app/)
+
+## Overview
+
+**ChatBTC** is an AI-powered conversational chatbot similar to ChatGPT, but with a unique twist—it integrates Bitcoin payments for interaction. Instead of a subscription model, users pay for every five messages using **Bitcoin**, offering flexible, usage-based pricing. Payments are processed through **Lightspark**, ensuring fast, secure, and low-cost Bitcoin transactions.
+
+This project is built with **Next.js** and uses **OpenAI's GPT model** to power the chatbot, making it capable of answering a wide range of questions. Its Bitcoin payment integration provides global access and flexibility, catering to crypto enthusiasts and users in regions with limited access to traditional payment systems.
+
+## Features
+
+- **Pay-Per-Use**: Users are charged for every five messages sent through the chatbot, paid using Bitcoin via the Lightspark payment system.
+- **Confidentiality**: No need to provide personal information or sign up for a subscription, ensuring privacy.
+- **Global Access**: With Bitcoin payments, users from around the world can interact with ChatBTC without traditional banking barriers.
+- **Real-time AI Responses**: Powered by GPT-3.5 for fast and accurate conversational responses.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js installed
+- Bitcoin wallet or Lightning Network-enabled wallet
+- OpenAI API Key
+- Lightspark API for Bitcoin payments
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The live version is deployed on [ChatBTC](https://chatbtc.vercel.app/).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+1. Clone the repository:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/polichain/ChatBTC.git
+   cd ChatBTC
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. Set up environment variables by creating a `.env.local` file with the following keys:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```plaintext
+    LIGHTSPARK_API_CLIENT_SECRET LIGHTSPARK_API_CLIENT_ID=your-secret-key
+    LIGHTSPARK_NODE_ID=your-secret-key
+    LIGHTSPARK_NODE_PASSWORD=your-secret-key
+    LIGHTSPARK_NODE_ID_USERTEST=your-secret-key
+    LIGHTSPARK_API_CLIENT_ID_USERTEST=your-secret-key
+    LIGHTSPARK_API_CLIENT_TEST_SECRET=your-secret-key
+    WEBHOOK_SIGNING_KEY=your-secret-key
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open your browser and navigate to `http://localhost:3000` to see the application running.
+
+
+## Contributing
+
+Feel free to open issues or submit pull requests for any improvements or new features. Contributions are welcome!
+
+## Licence
+
+Licence MIT
