@@ -28,7 +28,7 @@ async function addBotMessage(text: string): Promise<void> {
     const timestamp = getCurrentTime();
 
     try {
-        // Using fetch to call the API endpoint
+        // Faz a chamada para a API de geração de conteúdo da IA (Gemini)
         const response = await fetch('/api/geminiPrompt', {
             method: 'POST',
             body: JSON.stringify({ prompt: text }),
@@ -38,21 +38,38 @@ async function addBotMessage(text: string): Promise<void> {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to fetch bot response');
+            throw new Error('Falha ao buscar a resposta da IA');
         }
 
         const data = await response.json();
+        const responseText = data.response || 'Desculpe, não há resposta disponível.';
 
-        const botText = data.response || 'Sorry, no response available.';
+        // Calcula o valor do invoice baseado no número de tokens usados
+        const tokenCount = data.tokens.totalTokenCount || 100;
+        const amountInSatoshis = tokenCount; // Exemplo: 1 token = 1 satoshi
 
-        const newMessage: Message = { text: botText, timestamp, isSentByUser: false };
+        // Faz a requisição para a API de criação de invoice
+        const invoiceResponse = await fetch('/api/createInvoice', {
+            method: 'POST',
+            body: JSON.stringify({ amount: amountInSatoshis, memo: 'Pagamento de chatbot' }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!invoiceResponse.ok) {
+            throw new Error('Erro ao gerar o invoice');
+        }
+
+        const invoiceData = await invoiceResponse.json();
+        const invoice = invoiceData.invoice;
+
+        const newMessage: Message = { text: `Pague este invoice para receber a resposta: ${invoice}`, timestamp, isSentByUser: false };
         messages.push(newMessage);
 
-        console.log("Added bot message: ", newMessage);
-        console.log("List of messages: ", messages);
     } catch (error) {
-        console.error('Error while adding bot message:', error);
-        const errorMessage: Message = { text: 'Sorry, there was an error processing your request.', timestamp, isSentByUser: false };
+        console.error('Erro ao adicionar mensagem do bot:', error);
+        const errorMessage: Message = { text: 'Desculpe, houve um erro ao processar sua solicitação.', timestamp, isSentByUser: false };
         messages.push(errorMessage);
     }
 }
