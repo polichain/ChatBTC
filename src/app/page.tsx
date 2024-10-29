@@ -39,6 +39,17 @@ export default function Home() {
                 window.alert('Sucess');
             } else {
                 window.alert('Failed payment');
+            if (!response.ok) {
+                throw new Error('Falha ao processar o pagamento.');
+            }
+
+            const data = await response.json();
+            const paymentStatus = data.payment.status;
+
+            if (paymentStatus === 'COMPLETED') {
+                addUserMessage('Pagamento confirmado! Resposta liberada.');
+            } else {
+                addUserMessage('Falha no pagamento. Tente novamente.');
             }
 
         } catch (error) {
